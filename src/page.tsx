@@ -57,7 +57,13 @@ export function Page() {
 }
 
 const styles = stylex.create({
-  page: { backgroundColor: colorVars.bgSurface, minHeight: "100vh" },
+  page: {
+    backgroundColor: {
+      default: "#ffffff",
+      "@media (prefers-color-scheme: dark)": colorVars.bgCanvas,
+    },
+    minHeight: "100vh",
+  },
   main: {
     maxWidth: 736,
     marginInline: "auto",

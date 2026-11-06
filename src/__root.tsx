@@ -44,6 +44,13 @@ function Root({ children }: { children: ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning {...surface.props({ mode: "solid" })}>
       <head>
+        {/* Critical canvas colors mirror white and neutral900 before external CSS loads. */}
+        <style>{`html{color-scheme:light;background:#fff}body{background:inherit}@media(prefers-color-scheme:dark){html{color-scheme:dark;background:#08090a}}`}</style>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `document.documentElement.dataset.bolerishTheme=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";`,
+          }}
+        />
         <HeadContent />
       </head>
       <body>
