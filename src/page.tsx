@@ -62,7 +62,7 @@ const styles = stylex.create({
       default: "#ffffff",
       "@media (prefers-color-scheme: dark)": colorVars.bgCanvas,
     },
-    minHeight: "100vh",
+    minHeight: stylex.firstThatWorks("100dvh", "100vh"),
   },
   main: {
     maxWidth: 736,
@@ -72,7 +72,13 @@ const styles = stylex.create({
     paddingBottom: spacingVars.space12,
   },
   intro: {
-    height: { default: 320, "@media (width < 768px)": 256 },
+    height: {
+      default: 320,
+      "@media (width < 768px)": stylex.firstThatWorks<string>(
+        `clamp(calc(${spacingVars.space12} * 2), calc(100dvh - 480px), 256px)`,
+        "256px",
+      ),
+    },
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
