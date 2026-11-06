@@ -18,11 +18,11 @@ export const projects: readonly Project[] = [
     description: "UI, a little more alive.",
     href: "https://github.com/bolerish/edge",
   },
-  { id: "min", name: "min", description: "A minimal new tab browser extension.", href: null },
+  { id: "min", name: "Min", description: "A minimal new tab browser extension.", href: null },
   {
     id: "veil",
     name: "Veil",
-    description: "A browser extension for hiding unwanted page elements.",
+    description: "The web, a little quieter.",
     href: null,
   },
 ];
