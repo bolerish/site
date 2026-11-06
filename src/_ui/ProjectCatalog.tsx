@@ -7,7 +7,7 @@ import { Paragraph } from "@bolerish/ui/paragraph";
 import { Link } from "@bolerish/ui/link";
 import { projects } from "../_model/projects";
 
-export function ProjectDirectory() {
+export function ProjectCatalog() {
   return (
     <main {...stylex.props(styles.main)}>
       <header {...stylex.props(styles.section)}>
