@@ -1,7 +1,7 @@
 import { createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 import { surface } from "@bolerish/ui/surface";
 import { useEffect, type ReactNode } from "react";
-import css from "./styles/site.css?url";
+import css from "./site.css?url";
 
 const title = "bolerish";
 const description = "Software, interfaces, and experiments by Minyeong Jeong.";

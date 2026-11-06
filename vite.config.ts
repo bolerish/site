@@ -27,7 +27,7 @@ export default defineConfig({
         routesDirectory: ".",
         indexToken: "page",
         routeFileIgnorePattern:
-          "^_(ui|api|model|lib|config|shared)$|^(index|routeTree\\.gen)\\.[cm]?[jt]sx?$|^(shared|styles)$",
+          "^_(ui|api|model|lib|config|shared)$|^(index|routeTree\\.gen)\\.[cm]?[jt]sx?$|^shared$",
       },
       prerender: { enabled: true },
     }),
