@@ -1,3 +1,4 @@
+import profile from "~/assets/profile.webp";
 import { createFileRoute } from "@tanstack/react-router";
 import * as stylex from "@stylexjs/stylex";
 import { spacingVars } from "@bolerish/tokens/semantic.stylex";
@@ -14,6 +15,7 @@ const description =
   "웹에서 무언가를 만들고 있습니다. 일상에서 발견한 것들을 직접 만들어보고, 더 나은 방법을 고민하는 걸 좋아합니다.";
 const title = "Minyeong · bolerish";
 const canonical = "https://bolerish.com/writing";
+const image = new URL(profile, "https://bolerish.com").href;
 export const Route = createFileRoute("/writing/")({
   staticData: { lang: "ko" },
   head: () => ({
@@ -24,6 +26,16 @@ export const Route = createFileRoute("/writing/")({
       { property: "og:description", content: description },
       { property: "og:type", content: "website" },
       { property: "og:url", content: canonical },
+      { property: "og:site_name", content: "bolerish" },
+      { property: "og:image", content: image },
+      { property: "og:image:width", content: "1254" },
+      { property: "og:image:height", content: "1254" },
+      { property: "og:image:alt", content: "Minyeong 프로필" },
+      { name: "twitter:card", content: "summary" },
+      { name: "twitter:title", content: title },
+      { name: "twitter:description", content: description },
+      { name: "twitter:image", content: image },
+      { name: "twitter:image:alt", content: "Minyeong 프로필" },
     ],
     links: [{ rel: "canonical", href: canonical }],
   }),

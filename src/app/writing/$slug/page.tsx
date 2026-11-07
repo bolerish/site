@@ -13,6 +13,8 @@ import { createFileRoute, notFound } from "@tanstack/react-router";
 import { articles } from "~/app/writing/_model/articles";
 import { NotFoundPage } from "~/app/not-found";
 
+const image = new URL(profile, "https://bolerish.com").href;
+
 export const Route = createFileRoute("/writing/$slug/")({
   staticData: { lang: "ko" },
   loader: ({ params }) => {
@@ -30,6 +32,16 @@ export const Route = createFileRoute("/writing/$slug/")({
             { property: "og:description", content: article.description },
             { property: "og:type", content: "article" },
             { property: "og:url", content: "https://bolerish.com" + article.href },
+            { property: "og:site_name", content: "bolerish" },
+            { property: "og:image", content: image },
+            { property: "og:image:width", content: "1254" },
+            { property: "og:image:height", content: "1254" },
+            { property: "og:image:alt", content: "Minyeong 프로필" },
+            { name: "twitter:card", content: "summary" },
+            { name: "twitter:title", content: article.title + " · bolerish" },
+            { name: "twitter:description", content: article.description },
+            { name: "twitter:image", content: image },
+            { name: "twitter:image:alt", content: "Minyeong 프로필" },
           ],
           links: [{ rel: "canonical", href: "https://bolerish.com" + article.href }],
         }
