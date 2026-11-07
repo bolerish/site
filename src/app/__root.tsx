@@ -1,4 +1,6 @@
 import { createRootRoute, HeadContent, Scripts, useMatches } from "@tanstack/react-router";
+import * as stylex from "@stylexjs/stylex";
+import { lightColorTheme, darkColorTheme } from "@bolerish/tokens/themes.stylex";
 import { surface } from "@bolerish/ui/surface";
 import { useEffect, type ReactNode } from "react";
 import { NotFoundPage } from "~/app/not-found";
@@ -34,6 +36,11 @@ export const Route = createRootRoute({
   shellComponent: Root,
 });
 
+const themeClasses = {
+  light: stylex.props(lightColorTheme).className ?? "",
+  dark: stylex.props(darkColorTheme).className ?? "",
+};
+
 function Root({ children }: { children: ReactNode }) {
   const lang = useMatches({
     select: (matches) =>
@@ -44,6 +51,7 @@ function Root({ children }: { children: ReactNode }) {
     const updateTheme = () => {
       const mode = preference.matches ? "dark" : "light";
       document.documentElement.dataset.bolerishTheme = mode;
+      document.documentElement.className = themeClasses[mode];
     };
     updateTheme();
 
@@ -54,6 +62,7 @@ function Root({ children }: { children: ReactNode }) {
   return (
     <html
       lang={lang}
+      className={themeClasses.light}
       suppressHydrationWarning
       {...surface.props({ mode: "solid" })}
     >
@@ -62,7 +71,7 @@ function Root({ children }: { children: ReactNode }) {
         <style>{`html{color-scheme:light;background:#fff}body{background:inherit}@media(prefers-color-scheme:dark){html{color-scheme:dark;background:#08090a}}`}</style>
         <script
           dangerouslySetInnerHTML={{
-            __html: `document.documentElement.dataset.bolerishTheme=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";`,
+            __html: `(()=>{const mode=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.dataset.bolerishTheme=mode;document.documentElement.className=(${JSON.stringify(themeClasses)})[mode]})()`,
           }}
         />
         <HeadContent />

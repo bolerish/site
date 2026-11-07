@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import * as stylex from "@stylexjs/stylex";
-import { spacingVars, colorVars } from "@bolerish/tokens/semantic.stylex";
+import { spacingVars } from "@bolerish/tokens/semantic.stylex";
 import { Item, ItemGroup, ItemContent, ItemTitle, ItemDescription } from "@bolerish/ui/item";
 import { Heading } from "@bolerish/ui/heading";
 import { Paragraph } from "@bolerish/ui/paragraph";
@@ -78,10 +78,6 @@ function Page() {
 
 const styles = stylex.create({
   page: {
-    backgroundColor: {
-      default: "#ffffff",
-      "@media (prefers-color-scheme: dark)": colorVars.bgCanvas,
-    },
     minHeight: stylex.firstThatWorks("100dvh", "100vh"),
   },
   sectionHeading: {
