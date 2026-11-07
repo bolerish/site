@@ -8,7 +8,7 @@
     "lint": "oxlint src",
     "check": "pnpm typecheck && pnpm lint",
     "build": "vite build",
-    "deploy": "pnpm build && wrangler pages deploy dist/client --project-name bolerish-site",
+    "deploy": "pnpm build && wrangler pages deploy dist/client --project-name site",
     "preview": "vite preview"
   },
   "dependencies": {
