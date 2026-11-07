@@ -17,8 +17,8 @@ export function Page() {
           <Heading level={1} size="page">
             bolerish
           </Heading>
-          <Paragraph>A little more my own.</Paragraph>
           <Paragraph variant="description">
+            A little more my own. <br />
             Software, interfaces, and experiments by{" "}
             <Link variant="current" href="https://minyeong.xyz/">
               Minyeong

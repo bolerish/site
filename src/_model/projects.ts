@@ -8,21 +8,21 @@ export type Project = Readonly<{
 export const projects: readonly Project[] = [
   {
     id: "ui",
-    name: "tone",
+    name: "ease",
     description: "A React design system for consistent interfaces.",
-    href: "https://ui.bolerish.com/",
+    href: "https://bolerish.com/ease",
   },
   {
     id: "edge",
     name: "edge",
     description: "UI, a little more alive.",
-    href: "https://github.com/bolerish/edge",
+    href: "https://bolerish.com/edge",
   },
-  { id: "min", name: "Min", description: "A minimal new tab browser extension.", href: null },
-  {
-    id: "veil",
-    name: "Veil",
-    description: "The web, a little quieter.",
-    href: null,
-  },
+  // { id: "min", name: "Min", description: "A minimal new tab browser extension.", href: null },
+  // {
+  //   id: "veil",
+  //   name: "Veil",
+  //   description: "The web, a little quieter.",
+  //   href: null,
+  // },
 ];
