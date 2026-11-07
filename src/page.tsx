@@ -17,20 +17,20 @@ export function Page() {
           <Heading level={1} size="page">
             bolerish
           </Heading>
-          <Paragraph variant="description">A little more my own.</Paragraph>
+          <Paragraph>A little more my own.</Paragraph>
+          <Paragraph variant="description">
+            Software, interfaces, and experiments by{" "}
+            <Link variant="current" href="https://minyeong.xyz/">
+              Minyeong
+            </Link>
+            .
+          </Paragraph>
         </header>
         <section>
           <div {...stylex.props(styles.sectionHeading)}>
             <Heading level={2} size="section">
               Stuff.
             </Heading>
-            <Paragraph variant="description">
-              Software, interfaces, and experiments by{" "}
-              <Link variant="current" href="https://minyeong.xyz/">
-                Minyeong
-              </Link>
-              .
-            </Paragraph>
           </div>
           <ItemGroup>
             {projects.map((project) => (
