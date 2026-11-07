@@ -40,7 +40,7 @@ const htmlSchema = {
   tagNames: [...(defaultSchema.tagNames ?? []), "figure", "figcaption"],
   attributes: {
     ...defaultSchema.attributes,
-    img: [...(defaultSchema.attributes?.img ?? []), "width", "height"],
+    img: [...(defaultSchema.attributes?.img ?? []), "width", "height", "loading"],
     p: [...(defaultSchema.attributes?.p ?? []), "data-compact-spacing"],
   },
 };
@@ -218,7 +218,7 @@ export function MarkdownContent({ article }: { article: Article }) {
               {children}
             </code>
           ),
-          img: ({ node: _node, src, ...props }) => {
+          img: ({ node: _node, src, loading = "lazy", ...props }) => {
             let image = src;
             if (src?.startsWith("./images/") || src?.startsWith("images/")) {
               const key = `../../_content/${src.replace(/^\.\//, "")}`;
@@ -229,7 +229,7 @@ export function MarkdownContent({ article }: { article: Article }) {
               <img
                 {...props}
                 src={image}
-                loading="lazy"
+                loading={loading}
                 decoding="async"
                 {...stylex.props(styles.image)}
               />

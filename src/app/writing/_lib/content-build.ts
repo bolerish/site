@@ -56,6 +56,11 @@ export function parseArticle(source: string, file: string): ArticleContent {
       offset: node.position!.start.offset!,
     });
   });
+  const readingText = tree.children
+    .map((node) => toString(node, { includeHtml: false, includeImageAlt: false }))
+    .join("\n");
+  // A rough estimate in whitespace-separated units, not a measured Korean reading speed.
+  const wordsPerMinute = 200;
   return {
     headings,
     title: metadata.title,
@@ -63,7 +68,10 @@ export function parseArticle(source: string, file: string): ArticleContent {
     year: metadata.year,
     ...(date ? { date: date as string } : {}),
     body,
-    readingMinutes: Math.max(1, Math.ceil(body.split(/\s+/u).filter(Boolean).length / 200)),
+    readingMinutes: Math.max(
+      1,
+      Math.ceil(readingText.split(/\s+/u).filter(Boolean).length / wordsPerMinute),
+    ),
   };
 }
 

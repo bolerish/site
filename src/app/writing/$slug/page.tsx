@@ -86,7 +86,7 @@ function ArticlePage() {
                       <span aria-hidden="true">·</span>
                     </>
                   ) : null}
-                  <span>{article.readingMinutes}분</span>
+                  <span>약 {article.readingMinutes}분</span>
                 </span>
               </Paragraph>
             </div>
