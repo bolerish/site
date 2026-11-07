@@ -9,6 +9,9 @@ import {
 } from "@bolerish/tokens/semantic.stylex";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
+import rehypeSanitize, { defaultSchema } from "rehype-sanitize";
+import type { Root as HtmlRoot } from "hast";
 import { Checkbox } from "@bolerish/ui/checkbox";
 import {
   Table,
@@ -20,11 +23,27 @@ import {
   TableCell,
 } from "@bolerish/ui/table";
 import { Separator } from "@bolerish/ui/separator";
+import { Paragraph } from "@bolerish/ui/paragraph";
 import { Link } from "@bolerish/ui/link";
 import { RouterLink } from "~/shared/ui/RouterLink";
 import { visit } from "unist-util-visit";
 import type { Root } from "mdast";
 import type { Article } from "~/app/writing/_model/article";
+
+const imageAssets = import.meta.glob<string>(
+  "../../_content/images/**/*.{png,jpg,jpeg,webp,avif,gif,svg}",
+  { eager: true, query: "?url", import: "default" },
+);
+
+const htmlSchema = {
+  ...defaultSchema,
+  tagNames: [...(defaultSchema.tagNames ?? []), "figure", "figcaption"],
+  attributes: {
+    ...defaultSchema.attributes,
+    img: [...(defaultSchema.attributes?.img ?? []), "width", "height"],
+    p: [...(defaultSchema.attributes?.p ?? []), "data-compact-spacing"],
+  },
+};
 
 export function MarkdownContent({ article }: { article: Article }) {
   return (
@@ -56,7 +75,33 @@ export function MarkdownContent({ article }: { article: Article }) {
             });
           },
         ]}
+        rehypePlugins={[
+          rehypeRaw,
+          [rehypeSanitize, htmlSchema],
+          () => (tree: HtmlRoot) => {
+            // Preserve our generated TOC and footnote targets after sanitization prefixes IDs.
+            visit(tree, "element", (node) => {
+              const id = node.properties.id;
+              if (typeof id !== "string") return;
+              const heading = article.headings.find(
+                (heading) => id === `user-content-${heading.id}`,
+              );
+              if (/^h[1-6]$/.test(node.tagName) && heading) node.properties.id = heading.id;
+              if (
+                id.startsWith("user-content-user-content-fn") ||
+                id === "user-content-footnote-label"
+              )
+                node.properties.id = id.slice("user-content-".length);
+            });
+          },
+        ]}
         components={{
+          figure: ({ children }) => <figure {...stylex.props(styles.figure)}>{children}</figure>,
+          figcaption: ({ children }) => (
+            <figcaption>
+              <Paragraph variant="caption">{children}</Paragraph>
+            </figcaption>
+          ),
           section: ({ node: _node, children, ...props }) => (
             <section {...props} {...stylex.props(styles.footnotes)}>
               {children}
@@ -173,7 +218,23 @@ export function MarkdownContent({ article }: { article: Article }) {
               {children}
             </code>
           ),
-          img: ({ node: _node, ...props }) => <img {...props} {...stylex.props(styles.image)} />,
+          img: ({ node: _node, src, ...props }) => {
+            let image = src;
+            if (src?.startsWith("./images/") || src?.startsWith("images/")) {
+              const key = `../../_content/${src.replace(/^\.\//, "")}`;
+              image = imageAssets[key];
+              if (!image) throw new Error(`Writing image not found: ${src}`);
+            }
+            return (
+              <img
+                {...props}
+                src={image}
+                loading="lazy"
+                decoding="async"
+                {...stylex.props(styles.image)}
+              />
+            );
+          },
           hr: () => <Separator {...stylex.props(styles.proseDivider)} />,
           a: ({ node: _node, children, href, ...props }) =>
             href?.startsWith("/") && !href.startsWith("//") ? (
@@ -285,6 +346,15 @@ const styles = stylex.create({
     color: colorVars.fgPrimary,
     backgroundColor: colorVars.bgSubtle,
     verticalAlign: "middle",
+  },
+  figure: {
+    display: "grid",
+    gap: spacingVars.space2,
+    width: "fit-content",
+    maxWidth: "100%",
+    marginInline: 0,
+    marginBlockStart: spacingVars.space6,
+    marginBlockEnd: spacingVars.space2,
   },
   image: { maxWidth: "100%", height: "auto", borderRadius: radiusVars.md },
   proseDivider: { marginBlockStart: spacingVars.space6, marginBlockEnd: spacingVars.space2 },
