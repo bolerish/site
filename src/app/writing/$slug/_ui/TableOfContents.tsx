@@ -6,39 +6,6 @@ import * as stylex from "@stylexjs/stylex";
 import { useEffect, useState } from "react";
 import type { ArticleHeading } from "~/app/writing/_model/article";
 
-const styles = stylex.create({
-  rail: {
-    display: { default: "none", "@media (min-width: 1200px)": "block" },
-    position: "absolute",
-    insetBlock: 0,
-    left: "calc(100% + (100vw - 100%) * 0.1875)",
-    transform: "translateX(-50%)",
-    width: sizeVars.controlXs,
-  },
-  root: {
-    alignSelf: "start",
-    display: "grid",
-    maxHeight: `calc(100dvh - ${spacingVars.space12})`,
-    overflowY: "auto",
-    position: "sticky",
-    scrollbarWidth: "none",
-    top: spacingVars.space6,
-  },
-  items: { display: "grid", justifyItems: "start" },
-  item: {
-    minHeight: sizeVars.controlXs,
-    width: sizeVars.controlXs,
-  },
-  line: {
-    backgroundColor: colorVars.fgTertiary,
-    width: spacingVars.space4,
-  },
-  currentLine: {
-    backgroundColor: colorVars.fgPrimary,
-    width: spacingVars.space6,
-  },
-});
-
 export function TableOfContents({ headings }: { headings: readonly ArticleHeading[] }) {
   const [activeId, setActiveId] = useState(headings[0]?.id);
 
@@ -115,3 +82,36 @@ export function TableOfContents({ headings }: { headings: readonly ArticleHeadin
     </div>
   );
 }
+
+const styles = stylex.create({
+  rail: {
+    display: { default: "none", "@media (min-width: 1200px)": "block" },
+    position: "absolute",
+    insetBlock: 0,
+    left: "calc(100% + (100vw - 100%) * 0.1875)",
+    transform: "translateX(-50%)",
+    width: sizeVars.controlXs,
+  },
+  root: {
+    alignSelf: "start",
+    display: "grid",
+    maxHeight: `calc(100dvh - ${spacingVars.space12})`,
+    overflowY: "auto",
+    position: "sticky",
+    scrollbarWidth: "none",
+    top: spacingVars.space6,
+  },
+  items: { display: "grid", justifyItems: "start" },
+  item: {
+    minHeight: sizeVars.controlXs,
+    width: sizeVars.controlXs,
+  },
+  line: {
+    backgroundColor: colorVars.fgTertiary,
+    width: spacingVars.space4,
+  },
+  currentLine: {
+    backgroundColor: colorVars.fgPrimary,
+    width: spacingVars.space6,
+  },
+});
