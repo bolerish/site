@@ -5,24 +5,44 @@ import { Item, ItemGroup, ItemContent, ItemTitle, ItemDescription } from "@boler
 import { Heading } from "@bolerish/ui/heading";
 import { Paragraph } from "@bolerish/ui/paragraph";
 import { Link } from "@bolerish/ui/link";
-import { projects } from "./_model/projects";
+import { pageLayout } from "~/shared/styles/page-layout.stylex";
+import { RouterLink } from "~/shared/ui/RouterLink";
+import { projects } from "~/app/_model/projects";
 
-export const Route = createFileRoute("/")({ component: Page });
+const title = "bolerish";
+const description = "Software, interfaces, and experiments by Minyeong Jeong.";
+const canonical = "https://bolerish.com/";
 
-export function Page() {
+export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title },
+      { name: "description", content: description },
+      { property: "og:title", content: title },
+      { property: "og:description", content: description },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: canonical },
+    ],
+    links: [{ rel: "canonical", href: canonical }],
+  }),
+  component: Page,
+});
+
+function Page() {
   return (
-    <main {...stylex.props(styles.page)}>
-      <div {...stylex.props(styles.main)}>
-        <header {...stylex.props(styles.intro)}>
+    <main {...stylex.props(pageLayout.page, styles.page)}>
+      <div {...stylex.props(pageLayout.content)}>
+        <div aria-hidden="true" {...stylex.props(pageLayout.navigationSlot)} />
+        <header {...stylex.props(pageLayout.intro)}>
           <Heading level={1} size="page">
             bolerish
           </Heading>
           <Paragraph variant="description">
             A little more my own. <br />
             Software, interfaces, and experiments by{" "}
-            <Link variant="current" href="https://minyeong.xyz/">
+            <RouterLink variant="current" to="/writing">
               Minyeong
-            </Link>
+            </RouterLink>
             .
           </Paragraph>
         </header>
@@ -64,32 +84,10 @@ const styles = stylex.create({
     },
     minHeight: stylex.firstThatWorks("100dvh", "100vh"),
   },
-  main: {
-    maxWidth: 736,
-    marginInline: "auto",
-    paddingLeft: { default: 0, "@media (width < 768px)": spacingVars.space4 },
-    paddingRight: { default: 0, "@media (width < 768px)": spacingVars.space4 },
-    paddingBottom: spacingVars.space12,
-  },
-  intro: {
-    minHeight: {
-      default: 320,
-      "@media (width < 768px)": stylex.firstThatWorks<string>(
-        `clamp(calc(${spacingVars.space12} * 2), calc(100dvh - 480px), 256px)`,
-        "256px",
-      ),
-    },
-    paddingBlock: spacingVars.space4,
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    gap: spacingVars.space2,
-  },
   sectionHeading: {
     display: "grid",
     gap: spacingVars.space1,
     marginBottom: spacingVars.space4,
-    paddingTop: spacingVars.space8,
   },
   row: {
     display: "grid",

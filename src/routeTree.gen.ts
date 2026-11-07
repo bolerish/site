@@ -8,35 +8,65 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from './__root'
-import { Route as PageRouteImport } from './page'
+import { Route as rootRouteImport } from './app/__root'
+import { Route as PageRouteImport } from './app/page'
+import { Route as NotFoundRouteImport } from './app/not-found'
+import { Route as WritingPageRouteImport } from './app/writing/page'
+import { Route as WritingSlugPageRouteImport } from './app/writing/$slug/page'
 
 const PageRoute = PageRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NotFoundRoute = NotFoundRouteImport.update({
+  id: '/not-found',
+  path: '/not-found',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WritingPageRoute = WritingPageRouteImport.update({
+  id: '/writing/',
+  path: '/writing/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WritingSlugPageRoute = WritingSlugPageRouteImport.update({
+  id: '/writing/$slug/',
+  path: '/writing/$slug/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof PageRoute
+  '/not-found': typeof NotFoundRoute
+  '/writing/': typeof WritingPageRoute
+  '/writing/$slug/': typeof WritingSlugPageRoute
 }
 export interface FileRoutesByTo {
   '/': typeof PageRoute
+  '/not-found': typeof NotFoundRoute
+  '/writing': typeof WritingPageRoute
+  '/writing/$slug': typeof WritingSlugPageRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof PageRoute
+  '/not-found': typeof NotFoundRoute
+  '/writing/': typeof WritingPageRoute
+  '/writing/$slug/': typeof WritingSlugPageRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/not-found' | '/writing/' | '/writing/$slug/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/not-found' | '/writing' | '/writing/$slug'
+  id: '__root__' | '/' | '/not-found' | '/writing/' | '/writing/$slug/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   PageRoute: typeof PageRoute
+  NotFoundRoute: typeof NotFoundRoute
+  WritingPageRoute: typeof WritingPageRoute
+  WritingSlugPageRoute: typeof WritingSlugPageRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +78,35 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PageRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/not-found': {
+      id: '/not-found'
+      path: '/not-found'
+      fullPath: '/not-found'
+      preLoaderRoute: typeof NotFoundRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/writing/': {
+      id: '/writing/'
+      path: '/writing'
+      fullPath: '/writing/'
+      preLoaderRoute: typeof WritingPageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/writing/$slug/': {
+      id: '/writing/$slug/'
+      path: '/writing/$slug'
+      fullPath: '/writing/$slug/'
+      preLoaderRoute: typeof WritingSlugPageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   PageRoute: PageRoute,
+  NotFoundRoute: NotFoundRoute,
+  WritingPageRoute: WritingPageRoute,
+  WritingSlugPageRoute: WritingSlugPageRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
