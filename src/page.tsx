@@ -72,13 +72,14 @@ const styles = stylex.create({
     paddingBottom: spacingVars.space12,
   },
   intro: {
-    height: {
+    minHeight: {
       default: 320,
       "@media (width < 768px)": stylex.firstThatWorks<string>(
         `clamp(calc(${spacingVars.space12} * 2), calc(100dvh - 480px), 256px)`,
         "256px",
       ),
     },
+    paddingBlock: spacingVars.space4,
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
