@@ -5,7 +5,7 @@ import css from "./site.css?url";
 
 const title = "bolerish";
 const description = "Software, interfaces, and experiments by Minyeong Jeong.";
-const canonical = "https://bolerish-site.pages.dev/";
+const canonical = "https://bolerish.com/";
 
 export const Route = createRootRoute({
   head: () => ({

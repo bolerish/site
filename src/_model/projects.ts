@@ -10,13 +10,13 @@ export const projects: readonly Project[] = [
     id: "ui",
     name: "ease",
     description: "A React design system for consistent interfaces.",
-    href: "https://bolerish.com/ease",
+    href: "https://ui.bolerish.com/",
   },
   {
     id: "edge",
     name: "edge",
     description: "UI, a little more alive.",
-    href: "https://bolerish.com/edge",
+    href: "https://bolerish-edge.pages.dev/",
   },
   // { id: "min", name: "Min", description: "A minimal new tab browser extension.", href: null },
   // {
